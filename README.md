@@ -24,8 +24,8 @@ Clueo MCP Server brings AI personality injection to the Model Context Protocol e
 
 1. **Clone and setup:**
    ```bash
-   git clone https://github.com/ClueoFoundation/Personality-API.git
-   cd Personality-API/clueomcp
+   git clone https://github.com/ClueoFoundation/ClueoMCP.git
+   cd ClueoMCP
    npm install
    ```
 
