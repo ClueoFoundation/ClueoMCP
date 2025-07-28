@@ -22,6 +22,18 @@ Clueo MCP Server brings AI personality injection to the Model Context Protocol e
 
 ### Installation
 
+#### **Option 1: NPM Install (Recommended)**
+
+```bash
+# Install globally
+npm install -g clueo-mcp
+
+# Start the server
+clueo-mcp
+```
+
+#### **Option 2: From Source**
+
 1. **Clone and setup:**
    ```bash
    git clone https://github.com/ClueoFoundation/ClueoMCP.git
@@ -35,8 +47,7 @@ Clueo MCP Server brings AI personality injection to the Model Context Protocol e
    # Edit .env with your Clueo API key (optional for basic use)
    ```
 
-3. **Build and start:**
-   ```bash
+3. **Build and start:**   ```bash
    npm run build
    npm start
    ```
