@@ -23,11 +23,13 @@
   "author": "Clueo Foundation",
   "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.3",
+    "@modelcontextprotocol/sdk": "^1.17.0",
     "@types/node": "^22.10.5",
-    "axios": "^1.7.9",
-    "dotenv": "^16.4.7",
-    "typescript": "^5.7.3"
+    "@types/uuid": "^10.0.0",
+    "axios": "^1.11.0",
+    "dotenv": "^16.6.1",
+    "typescript": "^5.7.3",
+    "uuid": "^11.1.0"
   },
   "engines": {
     "node": ">=18.0.0"
