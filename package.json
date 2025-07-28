@@ -1,0 +1,44 @@
+{
+  "name": "clueo-mcp-server",
+  "version": "1.0.0",
+  "description": "Clueo MCP Server - AI Personality Layer for Model Context Protocol",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsc && node dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "personality",
+    "clueo",
+    "llm",
+    "anthropic",
+    "claude"
+  ],
+  "author": "Clueo Foundation",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.3",
+    "@types/node": "^22.10.5",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ClueoFoundation/Personality-API.git",
+    "directory": "clueomcp"
+  },
+  "homepage": "https://clueoai.com",
+  "bugs": {
+    "url": "https://github.com/ClueoFoundation/Personality-API/issues"
+  }
+}
