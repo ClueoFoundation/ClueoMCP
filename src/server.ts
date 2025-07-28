@@ -268,7 +268,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request): Promise<CallToo
             content: [
               {
                 type: 'text',
-                text: result.data?.enhancedText || text
+                text: result.data?.enhancedText || (typeof result.data === "string" ? result.data : JSON.stringify(result.data || "No response"))
               }
             ]
           };
@@ -310,7 +310,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request): Promise<CallToo
             content: [
               {
                 type: 'text',
-                text: `Applied "${preset.name}" personality:\n\n${result.data?.enhancedText || text}`
+                text: `Applied "${preset.name}" personality:\n\n${result.data?.enhancedText || (typeof result.data === "string" ? result.data : JSON.stringify(result.data || "No response"))}`
               }
             ]
           };
