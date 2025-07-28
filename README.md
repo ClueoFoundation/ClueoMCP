@@ -192,7 +192,7 @@ inject_preset_personality "This API endpoint..." analytical
 - **Dev+**: 5,000 calls/month ($25/month)
 - **Operator**: 50,000 calls/month ($149/month)
 
-[Get your API key →](https://clueoai.com/dashboard)
+[Get your API key →](https://api.clueoai.com/)
 
 ## 🤝 Contributing
 
