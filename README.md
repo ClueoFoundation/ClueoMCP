@@ -18,7 +18,7 @@ Clueo MCP Server brings AI personality injection to the Model Context Protocol e
 
 ### Prerequisites
 - Node.js 18+
-- An MCP-compatible client (Claude Desktop, VS Code, etc.)
+- An MCP-compatible client (Claude Desktop, Cursor, Windsurf, VS Code, etc.)
 
 ### Installation
 
