@@ -226,7 +226,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                         content: [
                             {
                                 type: 'text',
-                                text: result.data?.enhancedText || (typeof result.data === "string" ? result.data : JSON.stringify(result.data || "No response"))
+                                text: typeof result.data === "string" ? result.data : String(result.data || "No response")
                             }
                         ]
                     };
@@ -261,7 +261,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                         content: [
                             {
                                 type: 'text',
-                                text: `Applied "${preset.name}" personality:\n\n${result.data?.enhancedText || (typeof result.data === "string" ? result.data : JSON.stringify(result.data || "No response"))}`
+                                text: `Applied "${preset.name}" personality:\n\n${typeof result.data === "string" ? result.data : String(result.data || "No response")}`
                             }
                         ]
                     };
