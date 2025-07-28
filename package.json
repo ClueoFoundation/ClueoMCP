@@ -1,5 +1,5 @@
 {
-  "name": "clueo-mcp-server",
+  "name": "clueo-mcp",
   "version": "1.0.0",
   "description": "Clueo MCP Server - AI Personality Layer for Model Context Protocol",
   "main": "dist/server.js",
