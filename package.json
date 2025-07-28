@@ -1,6 +1,6 @@
 {
   "name": "clueo-mcp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Clueo MCP Server - AI Personality Layer for Model Context Protocol",
   "main": "dist/server.js",
   "type": "module",
