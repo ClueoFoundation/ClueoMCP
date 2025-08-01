@@ -258,8 +258,8 @@ CLUEO_API_URL=https://backend.clueoai.com
 CLUEO_API_KEY=your_api_key_here
 
 # Server Configuration
-MCP_SERVER_NAME=clueo-ai-personality
-MCP_SERVER_VERSION=1.2.19
+MCP_SERVER_NAME=clueo-mcp
+MCP_SERVER_VERSION=1.2.20
 LOG_LEVEL=info
 ```
 
