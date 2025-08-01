@@ -1,25 +1,25 @@
-# 🎭 Clueo MCP Server
+# 🎭 OpenClueo MCP Server
 **The Universal AI Personality Layer for Model Context Protocol**
 
 *Patent-pending technology that transforms any AI into a consistent, branded personality across all platforms.*
 
-[![npm version](https://badge.fury.io/js/clueo-mcp.svg)](https://badge.fury.io/js/clueo-mcp)
+[![npm version](https://badge.fury.io/js/@openclueo/mcp.svg)](https://badge.fury.io/js/@openclueo/mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-Transform any MCP-compatible AI with rich, consistent personalities powered by Clueo's scientifically-backed Big Five personality engine. **The first universal AI personality protocol** that works across Claude Desktop, Cursor, Windsurf, VS Code, and any MCP-compatible platform.
+Transform any MCP-compatible AI with rich, consistent personalities powered by OpenClueo's scientifically-backed Big Five personality engine. **The first universal AI personality protocol** that works across Claude Desktop, Cursor, Windsurf, VS Code, and any MCP-compatible platform.
 
 ## ⚡ Quick Start
 
 ```bash
 # Install from npm
-npm install -g clueo-mcp
+npm install -g @openclueo/mcp
 
 # Add to your IDE (Claude Desktop example)
 {
   "mcpServers": {
-    "clueo-ai-personality": {
-      "command": "clueo-mcp",
+    "clueo-mcp": {
+      "command": "@openclueo/mcp",
       "env": {
         "CLUEO_API_URL": "https://backend.clueoai.com",
         "CLUEO_API_KEY": "your_api_key_here"
@@ -33,7 +33,7 @@ inject_preset_personality "Hello, how can I help?" "professional"
 inject_personality "Write an email" {"openness": 8, "conscientiousness": 9}
 ```
 
-## 🌟 What Makes Clueo MCP Revolutionary?
+## 🌟 What Makes OpenClueo MCP Revolutionary?
 
 ### **🎯 Universal AI Personality Protocol**
 The **first standardized method** for applying consistent personality traits across ALL AI platforms:
@@ -67,10 +67,10 @@ AI that learns YOUR personality preferences:
 
 ```bash
 # Install globally
-npm install -g clueo-mcp
+npm install -g @openclueo/mcp
 
 # Verify installation
-clueo-mcp --version
+@openclueo/mcp --version
 ```
 
 ### **Option 2: From Source**
@@ -91,8 +91,8 @@ Add to your `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "clueo-ai-personality": {
-      "command": "clueo-mcp",
+    "clueo-mcp": {
+      "command": "@openclueo/mcp",
       "env": {
         "CLUEO_API_URL": "https://backend.clueoai.com",
         "CLUEO_API_KEY": "your_api_key_here"
@@ -106,8 +106,8 @@ Add to your `claude_desktop_config.json`:
 
 1. **Settings** → **Features** → **Model Context Protocol**
 2. **Add Server**:
-   - **Name**: `clueo-ai-personality`
-   - **Command**: `clueo-mcp`
+   - **Name**: `clueo-mcp`
+   - **Command**: `@openclueo/mcp`
    - **Environment**: `CLUEO_API_URL=https://backend.clueoai.com`
 
 ### Windsurf IDE
@@ -118,8 +118,8 @@ Add to your `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "clueo-ai-personality": {
-      "command": "clueo-mcp",
+    "clueo-mcp": {
+      "command": "@openclueo/mcp",
       "env": {
         "CLUEO_API_URL": "https://backend.clueoai.com",
         "CLUEO_API_KEY": "your_api_key_here"
@@ -131,7 +131,7 @@ Add to your `claude_desktop_config.json`:
 
 ### VS Code (with MCP extension)
 
-Install the MCP extension, then add the Clueo server to your workspace settings.
+Install the MCP extension, then add the OpenClueo server to your workspace settings.
 
 ## 🎭 Personality Presets
 
@@ -306,7 +306,7 @@ Each dimension uses a **1-10 scale** based on established psychological research
 
 ## 🤝 Contributing
 
-We welcome contributions to the open source Clueo MCP Server!
+We welcome contributions to the open source OpenClueo MCP Server!
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-personality`)
@@ -328,15 +328,15 @@ MIT License - see [LICENSE](LICENSE) for details.
 - **[Enterprise Licensing](mailto:enterprise@clueoai.com)**
 - **[Support & Issues](https://github.com/ClueoFoundation/ClueoMCP/issues)**
 
-## 🌟 Why Clueo MCP Changes Everything
+## 🌟 Why OpenClueo MCP Changes Everything
 
-### **Before Clueo MCP:**
+### **Before OpenClueo MCP:**
 - ❌ Generic, inconsistent AI responses across platforms
 - ❌ No brand personality control for organizations  
 - ❌ Manual personality prompting for every interaction
 - ❌ No learning or memory of personality preferences
 
-### **With Clueo MCP:**
+### **With OpenClueo MCP:**
 - ✅ **Universal personality protocol** across ALL AI platforms
 - ✅ **Scientific Big Five model** with precise numerical control
 - ✅ **Enterprise brand consistency** with compliance monitoring
@@ -346,7 +346,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🚀 What's Next?
 
-Clueo MCP represents the **first step toward universal AI personality standardization**. As the ecosystem grows, we're building:
+OpenClueo MCP represents the **first step toward universal AI personality standardization**. As the ecosystem grows, we're building:
 
 - **Personality Marketplace**: Buy, sell, and share personality presets
 - **Industry-Specific Templates**: Healthcare AI, Legal AI, Financial AI personalities

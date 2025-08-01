@@ -14,6 +14,7 @@ import {
 import { ClueoApiClient } from './clueo-api.js';
 import { PERSONALITY_PRESETS, getPresetById, getPresetsByCategory, searchPresets } from './presets.js';
 import { PersonalityConfig, PersonalityPreset } from './types.js';
+import { MemoryManager } from './memory-manager.js';
 import dotenv from 'dotenv';
 
 // Load environment variables
@@ -25,8 +26,9 @@ const SERVER_VERSION = process.env.MCP_SERVER_VERSION || '1.0.0';
 const CLUEO_API_URL = process.env.CLUEO_API_URL || 'https://backend.clueoai.com';
 const CLUEO_API_KEY = process.env.CLUEO_API_KEY;
 
-// Initialize Clueo API client
+// Initialize Clueo API client and memory manager
 const clueoClient = new ClueoApiClient(CLUEO_API_URL, CLUEO_API_KEY);
+const memoryManager = new MemoryManager();
 
 // Create MCP server
 const server = new Server(
@@ -168,6 +170,71 @@ const tools: Tool[] = [
         }
       }
     }
+  },
+  {
+    name: 'get_memory_suggestions',
+    description: 'Get personality suggestions based on context and usage history',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        context: {
+          type: 'string',
+          description: 'The context for which to get personality suggestions (e.g., "customer_email", "technical_documentation")'
+        },
+        userId: {
+          type: 'string',
+          description: 'Optional user ID to get personalized suggestions'
+        }
+      },
+      required: ['context']
+    }
+  },
+  {
+    name: 'save_project_personality',
+    description: 'Save a default personality configuration for a specific project',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        projectPath: {
+          type: 'string',
+          description: 'The file system path of the project'
+        },
+        projectName: {
+          type: 'string',
+          description: 'A human-readable name for the project'
+        },
+        personality: {
+          type: 'object',
+          properties: {
+            openness: { type: 'number', minimum: 1, maximum: 10 },
+            conscientiousness: { type: 'number', minimum: 1, maximum: 10 },
+            extraversion: { type: 'number', minimum: 1, maximum: 10 },
+            agreeableness: { type: 'number', minimum: 1, maximum: 10 },
+            neuroticism: { type: 'number', minimum: 1, maximum: 10 }
+          },
+          required: ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'],
+          description: 'Big Five personality dimensions (1-10 scale)'
+        },
+        userId: {
+          type: 'string',
+          description: 'Optional user ID'
+        }
+      },
+      required: ['projectPath', 'projectName', 'personality']
+    }
+  },
+  {
+    name: 'get_usage_analytics',
+    description: 'Get analytics about personality usage patterns',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        userId: {
+          type: 'string',
+          description: 'Optional user ID to get personalized analytics'
+        }
+      }
+    }
   }
 ];
 
@@ -263,6 +330,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request): Promise<CallToo
         
         const result = await clueoClient.enhancedInjectPersonality(text, personalityConfig, {}, apiKey);
         
+        // Record usage in memory
+        await memoryManager.recordPersonalityUsage(
+          personalityConfig,
+          'inject_personality',
+          undefined,
+          result.success
+        );
+        
         if (result.success) {
           return {
             content: [
@@ -305,6 +380,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request): Promise<CallToo
         
         const result = await clueoClient.enhancedInjectPersonality(text, preset.config, {}, apiKey);
         
+        // Record usage in memory
+        await memoryManager.recordPersonalityUsage(
+          preset.config,
+          'inject_preset_personality',
+          presetId,
+          result.success
+        );
+        
         if (result.success) {
           return {
             content: [
@@ -346,6 +429,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request): Promise<CallToo
         }
         
         const result = await clueoClient.simulateResponse(prompt, personalityConfig, apiKey);
+        
+        // Record usage in memory
+        await memoryManager.recordPersonalityUsage(
+          personalityConfig,
+          'simulate_response',
+          undefined,
+          result.success
+        );
         
         if (result.success) {
           return {
@@ -402,6 +493,103 @@ server.setRequestHandler(CallToolRequestSchema, async (request): Promise<CallToo
         };
       }
       
+      case 'get_memory_suggestions': {
+        const { context, userId } = args as {
+          context: string;
+          userId?: string;
+        };
+        
+        const suggestions = await memoryManager.getPersonalitySuggestions(context, userId);
+        
+        if (suggestions.length === 0) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: `No personality suggestions found for context "${context}". Try using the personality injection tools first to build up usage history.`
+              }
+            ]
+          };
+        }
+        
+        const suggestionList = suggestions.map((config, index) => 
+          `**Suggestion ${index + 1}:**\n` +
+          `Openness: ${config.openness}, Conscientiousness: ${config.conscientiousness}, ` +
+          `Extraversion: ${config.extraversion}, Agreeableness: ${config.agreeableness}, ` +
+          `Neuroticism: ${config.neuroticism}`
+        ).join('\n\n');
+        
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Top personality suggestions for context "${context}":\n\n${suggestionList}`
+            }
+          ]
+        };
+      }
+      
+      case 'save_project_personality': {
+        const { projectPath, projectName, personality, userId } = args as {
+          projectPath: string;
+          projectName: string;
+          personality: any;
+          userId?: string;
+        };
+        
+        const personalityConfig = validatePersonalityConfig(personality);
+        if (!personalityConfig) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: 'Error: Invalid personality configuration. All dimensions must be numbers between 1-10.'
+              }
+            ]
+          };
+        }
+        
+        await memoryManager.saveProjectSetting(projectPath, projectName, personalityConfig, userId);
+        
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Successfully saved personality configuration for project "${projectName}" at path "${projectPath}".`
+            }
+          ]
+        };
+      }
+      
+      case 'get_usage_analytics': {
+        const { userId } = args as {
+          userId?: string;
+        };
+        
+        const stats = await memoryManager.getUsageStats(userId);
+        
+        const topPersonalitiesText = stats.topPersonalities.map((item, index) => 
+          `${index + 1}. Used ${item.count} times - O:${item.config.openness} C:${item.config.conscientiousness} E:${item.config.extraversion} A:${item.config.agreeableness} N:${item.config.neuroticism}`
+        ).join('\n');
+        
+        const topContextsText = stats.topContexts.map((item, index) => 
+          `${index + 1}. ${item.context} (${item.count} uses)`
+        ).join('\n');
+        
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `**Usage Analytics:**\n\n` +
+                    `Total personality injections: ${stats.totalUsages}\n` +
+                    `Success rate: ${(stats.successRate * 100).toFixed(1)}%\n\n` +
+                    `**Top Personalities:**\n${topPersonalitiesText || 'No usage data yet'}\n\n` +
+                    `**Top Contexts:**\n${topContextsText || 'No usage data yet'}`
+            }
+          ]
+        };
+      }
+      
       default:
         return {
           content: [
@@ -429,7 +617,7 @@ async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
   
-  console.error(`🎭 Clueo MCP Server ${SERVER_VERSION} started`);
+  console.error(`🎭 OpenClueo MCP Server ${SERVER_VERSION} started`);
   console.error(`🔗 Connected to: ${CLUEO_API_URL}`);
   console.error(`📚 Loaded ${PERSONALITY_PRESETS.length} personality presets`);
   console.error(`🛠️  Available tools: ${tools.length}`);
@@ -438,13 +626,13 @@ async function main() {
 
 // Handle process termination
 process.on('SIGINT', async () => {
-  console.error('\n🛑 Shutting down Clueo MCP Server...');
+  console.error('\n🛑 Shutting down OpenClueo MCP Server...');
   await server.close();
   process.exit(0);
 });
 
 process.on('SIGTERM', async () => {
-  console.error('\n🛑 Shutting down Clueo MCP Server...');
+  console.error('\n🛑 Shutting down OpenClueo MCP Server...');
   await server.close();
   process.exit(0);
 });

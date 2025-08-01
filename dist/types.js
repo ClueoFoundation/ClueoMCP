@@ -1,3 +1,3 @@
-// Clueo MCP Server Types
+// OpenClueo MCP Server Types
 export {};
 //# sourceMappingURL=types.js.map

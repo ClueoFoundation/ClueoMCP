@@ -1,7 +1,7 @@
 {
-  "name": "clueo-mcp",
+  "name": "@openclueo/mcp",
   "version": "1.2.20",
-  "description": "Clueo MCP Server - AI Personality Layer for Model Context Protocol",
+  "description": "OpenClueo MCP Server - AI Personality Layer for Model Context Protocol",
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
@@ -36,11 +36,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ClueoFoundation/Personality-API.git",
-    "directory": "clueomcp"
+    "url": "https://github.com/ClueoFoundation/ClueoMCP.git"
   },
   "homepage": "https://clueoai.com",
   "bugs": {
-    "url": "https://github.com/ClueoFoundation/Personality-API/issues"
+    "url": "https://github.com/ClueoFoundation/ClueoMCP/issues"
   }
 }

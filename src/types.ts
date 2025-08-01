@@ -1,4 +1,4 @@
-// Clueo MCP Server Types
+// OpenClueo MCP Server Types
 
 export interface PersonalityConfig {
   openness: number;
