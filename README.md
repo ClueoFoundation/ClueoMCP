@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/clueofoundation-clueomcp-badge.png)](https://mseep.ai/app/clueofoundation-clueomcp)
+
 # 🎭 OpenClueo MCP Server
 **The Universal AI Personality Layer for Model Context Protocol**
 
